@@ -61,6 +61,13 @@ func main() {
 	registry := prometheus.NewRegistry()
 	registry.MustRegister(localBackups, autoBackup, totalSnapshots, bytesUsed, snapshotTime, lastGathered)
 
+	var destination, err = getDesinationAlias()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	fmt.Println(destination)
+
 	for {
 		tmRoot, err := parseTimemachinePlist("/Library/Preferences/com.apple.TimeMachine.plist")
 		if err != nil {
